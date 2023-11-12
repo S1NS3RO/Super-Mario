@@ -1,0 +1,143 @@
+:root {
+  --pipe-width: 30px;
+  --clouds-width: 250px;
+  --mario-jump: 90px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 128, 0, 0.482), rgba(0, 0, 255, 0.419));
+  z-index: 100;
+}
+
+.loose {
+  display: none;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(231, 125, 189, 0.3);
+  z-index: 9;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container {
+  background: linear-gradient(skyblue, white);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-bottom: 50px solid green;
+  overflow: hidden;
+}
+
+.start button,
+.loose button {
+  padding: 10px 15px;
+  font-size: 1.3rem;
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  background: green;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.clouds {
+  width: var(--clouds-width);
+  position: absolute;
+  right: 0;
+  top: 15%;
+  animation: clouds 15s linear infinite;
+}
+
+.mario {
+  width: 80px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.jump {
+  animation: jump 0.5s ease-in-out infinite;
+}
+
+.pipe {
+  height: 40px;
+  width: var(--pipe-width);
+  position: absolute;
+  bottom: 0;
+  right: calc(var(--pipe-width) * -1);
+  z-index: 2;
+  animation: none;
+}
+
+.moreOne {
+  position: fixed;
+  bottom: 5px;
+  left: 20%;
+  background: #59c940;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 3;
+}
+
+@keyframes pipe {
+  from {
+    right: calc(var(--pipe-width) * -1);
+  }
+  to {
+    right: 100%;
+  }
+}
+
+@keyframes jump {
+  0% {
+    bottom: 0;
+  }
+  40% {
+    bottom: var(--mario-jump);
+  }
+  50% {
+    bottom: var(--mario-jump);
+  }
+  60% {
+    bottom: var(--mario-jump);
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes clouds {
+  from {
+    right: calc(var(--clouds-width) * -1);
+  }
+  to {
+    right: 100%;
+    top: 20%;
+  }
+}

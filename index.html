@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="ie=edge" />
+    <title>Super Mário</title>
+    <link
+      rel="stylesheet"
+      href="./styles.css" />
+  </head>
+  <body>
+    <div class="moreOne">1.20</div>
+    <div class="start"><button onClick="startGame()">Start</start></button></div>
+      <div class="loose">
+        <img src="./assets/game-over-screen.png"/>
+        <button onClick="restart()">Recomeçar</button>
+      </div>
+    <div class="container">
+      <img
+        src="./assets/clouds.png"
+        class="clouds" />
+      <img
+        src="./assets/mario.gif"
+        class="mario" />
+      <img
+        src="./assets/pipe.png"
+        class="pipe" />
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
