@@ -1,1 +1,1 @@
-# Super-Mario
+Projeto inspirado em um vídeo, porém o código foi escrito do zero, o objetivo é entender um pouco mais sobre mecânicas de JavaScript e UX.

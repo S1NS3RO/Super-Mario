@@ -4,53 +4,131 @@ const pipe = document.querySelector('.pipe')
 const clouds = document.querySelector('.clouds')
 const loose = document.querySelector('.loose')
 const start = document.querySelector('.start')
-const moreOne = document.querySelector('.moreOne')
+const speedMultiplier = document.querySelector('.speed_multiplier')
+const html_lastRecord = document.querySelector('.last_record')
+const html_record = document.querySelector('.record')
+const html_bestRecord = document.querySelector('.best_record')
+const colisionBtn = document.querySelector('.colision')
+const jumpModeBtn = document.querySelector('.jumpmode')
 
-let speedPipe = 1.2
+const enemies = [
+  'pipe',
+  'pipe',
+  'pipe',
+  'pipe',
+  'bala',
+  'balaboca',
+  'fantasma',
+  'gumb',
+  'king',
+  'peixe',
+  'pixel',
+  'planta'
+]
+
+const speedPipeOriginal = 1.3
+let speedPipe = speedPipeOriginal
+let playerLastRecord = 0
+let playerCurrentRecord = 0
+let playerBestRecord = 0
+
+let colisionMode = false
+let jumpMode = false
+
+const handleColisionMode = () => {
+  colisionMode = !colisionMode
+  colisionBtn.innerHTML = `Colision ${!colisionMode}`
+}
+const handleJumpMode = () => {
+  jumpMode = !jumpMode
+  jumpModeBtn.innerHTML = `Jumper ${jumpMode}`
+}
 
 const startGame = () => {
-  pipe.addEventListener('animationiteration', () => {
-    speedPipe -= 0.03
-    moreOne.innerHTML = speedPipe.toFixed(3)
+  const onAnimationIteration = () => {
+    playerCurrentRecord++
+    html_record.innerHTML = `Atual: ${playerCurrentRecord}`
+    let enemie = Math.floor(Math.random() * enemies.length)
+    pipe.src = `./assets/enemies/${enemies[enemie]}.png`
 
-    pipe.style.animation = `pipe ${speedPipe}s linear infinite`
-  })
+    if (speedPipe >= 0.65) {
+      speedPipe -= 0.01
+      speedPipeOnScreen()
+      pipe.style.animation = 'none'
+      setTimeout(() => {
+        pipe.style.animation = `pipe ${speedPipe}s linear infinite`
+      }, 200)
+    }
+  }
+
+  const speedPipeOnScreen = () => {
+    const multipliersText = [
+      '0.5x',
+      '1.0x',
+      '1.5x',
+      '2.0x',
+      '2.5x',
+      '3.0x',
+      '3.5x'
+    ]
+    const multipliersIndex = Math.floor(playerCurrentRecord / 10)
+    multipliersValue =
+      multipliersText[multipliersIndex] ||
+      multipliersText[multipliersText.length - 1]
+    speedMultiplier.innerHTML = `Velocidade: ${multipliersValue}`
+  }
+
+  pipe.addEventListener('animationiteration', onAnimationIteration)
 
   start.style.display = 'none'
   pipe.style.animation = `pipe ${speedPipe}s linear infinite`
 
   const loop = setInterval(() => {
+    const pipeHeight = pipe.offsetHeight
     let pipePosition = pipe.offsetLeft
-    let marioPosition = +getComputedStyle(mario).bottom.replace('px', '')
+    let marioJumpHeight = +getComputedStyle(mario).bottom.replace('px', '')
+    console.log(pipeHeight)
 
-    /* Game Over
-    if (pipePosition <= 80 && pipePosition > 0 && marioPosition <= 40) {
+    // Game Over
+    if (jumpMode && pipePosition <= 145) {
+      // Pula automaticamente
+      jump({ type: 'automatic' })
+    } else if (
+      !colisionMode &&
+      pipePosition <= 70 &&
+      pipePosition > 0 &&
+      marioJumpHeight <= pipeHeight - 3
+    ) {
       pipe.style.animation = 'none'
+      mario.classList.remove('jump')
       pipe.style.left = `${pipePosition}px`
-      mario.style.bottom = `${marioPosition}px`
-      mario.src = './assets/game-over.png'
+      mario.style.bottom = `${marioJumpHeight}px`
+      mario.src = './assets/mario-dead.png'
       mario.style.width = '40px'
-      mario.style.marginLeft = '40px'
+      mario.style.marginLeft = '30px'
 
       loose.style.display = 'flex'
 
-      clearInterval(timerSpeed)
+      pipe.removeEventListener('animationiteration', onAnimationIteration)
+
       clearInterval(loop)
-    }*/
+    }
   }, 10)
 }
 
-const jump = () => {
-  if (event.type === 'click' || event.key === ' ' || event.key === 'ArrowUp') {
-    mario.classList.add('jump')
-    setTimeout(() => {
-      mario.classList.remove('jump')
-    }, 500)
-  }
-}
-
 const restart = () => {
-  pipe.style.animation = 'pipe 1.2s linear infinite'
+  if (playerCurrentRecord > playerBestRecord) {
+    playerBestRecord = playerCurrentRecord
+    html_bestRecord.innerHTML = `Melhor: ${playerBestRecord}`
+  }
+
+  playerLastRecord = playerCurrentRecord
+  html_lastRecord.innerHTML = `Anterior: ${playerLastRecord}`
+
+  playerCurrentRecord = 0
+  html_record.innerHTML = `Atual: ${playerCurrentRecord}`
+
+  pipe.style.animation = `pipe ${speedPipeOriginal} linear infinite`
   pipe.style.left = `auto`
 
   mario.style.bottom = `0px`
@@ -59,9 +137,28 @@ const restart = () => {
   mario.style.width = '80px'
 
   loose.style.display = 'none'
-  speedPipe = 1.2
-  moreOne.innerHTML = speedPipe.toFixed(3)
+
+  speedPipe = speedPipeOriginal
+  speedMultiplier.innerHTML = speedPipe.toFixed(2)
   startGame()
+}
+
+let isJumping = false
+const jump = event => {
+  if (
+    !isJumping &&
+    (event.type === 'click' ||
+      event.key === ' ' ||
+      event.key === 'ArrowUp' ||
+      event.type === 'automatic')
+  ) {
+    isJumping = true
+    mario.classList.add('jump')
+    setTimeout(() => {
+      mario.classList.remove('jump')
+      isJumping = false
+    }, 600)
+  }
 }
 
 container.addEventListener('click', jump)

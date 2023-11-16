@@ -14,12 +14,24 @@
       href="./styles.css" />
   </head>
   <body>
-    <div class="moreOne">1.20</div>
-    <div class="start"><button onClick="startGame()">Start</start></button></div>
-      <div class="loose">
-        <img src="./assets/game-over-screen.png"/>
-        <button onClick="restart()">Recomeçar</button>
-      </div>
+    <div class="god_mode">
+      <button class="colision" onClick="handleColisionMode()">Colisio  true</button>
+      
+      <button class="jumpmode" onClick="handleJumpMode()">Jumper false</button>
+    </div>
+      <div class="speed_multiplier">Speed</div>
+    <div class="dashboard">
+      <div class="last_record">Anterior: 0</div>
+      <div class="record">Atual: 0</div>
+      <div class="best_record">Melhor: 0</div>
+    </div>
+    <div class="start">
+      <button onClick="startGame()">Start</button>
+    </div>
+    <div class="loose">
+      <img src="./assets/game-over.png" />
+      <button onClick="restart()">Recomeçar</button>
+    </div>
     <div class="container">
       <img
         src="./assets/clouds.png"
@@ -28,7 +40,7 @@
         src="./assets/mario.gif"
         class="mario" />
       <img
-        src="./assets/pipe.png"
+        src="./assets/enemies/pipe.png"
         class="pipe" />
     </div>
 
