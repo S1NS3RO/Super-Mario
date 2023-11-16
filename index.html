@@ -15,20 +15,27 @@
   </head>
   <body>
     <div class="modmenu">
-      <button class="colision" onClick="handleColisionMode()">Colision  ON</button>
-      
-      <button class="jumpmode" onClick="handleJumpMode()">Jumper OFF</button>
-      
-      <button class="speedmode" onClick="handleSpeedMode()">Speed OFF</button>
+      <button
+        class="colision"
+        onClick="handleColisionMode()">
+        Colision ON
+      </button>
+
+      <button
+        class="jumpmode"
+        onClick="handleJumpMode()">
+        Jumper OFF
+      </button>
+
+      <button
+        class="speedmode"
+        onClick="handleSpeedMode()">
+        Speed OFF
+      </button>
     </div>
-      <div class="speed_multiplier">Speed</div>
-    <div class="dashboard">
-      <div class="last_record">Anterior: 0</div>
-      <div class="record">Atual: 0</div>
-      <div class="best_record">Melhor: 0</div>
-    </div>
+    <div class="speed_multiplier">Speed</div>
     <div class="start">
-      <button onClick="startGame()">Start</button>
+      <button onClick="runGame()">Start</button>
     </div>
     <div class="loose">
       <img src="./assets/game-over.png" />
@@ -45,7 +52,11 @@
         src="./assets/enemies/pipe.png"
         class="pipe" />
     </div>
-
+    <div class="dashboard">
+      <div class="last_record">Anterior: 0</div>
+      <div class="record">Atual: 0</div>
+      <div class="best_record">Melhor: 0</div>
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>

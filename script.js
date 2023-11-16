@@ -27,16 +27,17 @@ const enemies = [
   'pixel',
   'planta'
 ]
-
+const multipliersText = ['0.5x', '1.0x', '1.5x', '2.0x', '2.5x', '3.0x', '3.5x']
 const speedPipeOriginal = 1.3
+
 let speedPipe = speedPipeOriginal
 let playerLastRecord = 0
 let playerCurrentRecord = 0
 let playerBestRecord = 0
-
-let modMenu = true
+let isJumping = false
 let colisionMode = false
 let jumpMode = false
+let modMenu = true // Ativa o mod menu
 
 const handleModMenu = () => {
   if (modMenu) {
@@ -45,13 +46,14 @@ const handleModMenu = () => {
     modMenuBtn.style.display = 'none'
   }
 }
-handleModMenu()
 
 const handleColisionMode = () => {
   colisionMode = !colisionMode
   if (!colisionMode) {
+    colisionBtn.style.background = ''
     colisionBtn.innerHTML = `Colision ON`
   } else {
+    colisionBtn.style.background = 'green'
     colisionBtn.innerHTML = `Colision OFF`
   }
 }
@@ -59,8 +61,10 @@ const handleColisionMode = () => {
 const handleJumpMode = () => {
   jumpMode = !jumpMode
   if (jumpMode) {
+    jumpModeBtn.style.background = 'green'
     jumpModeBtn.innerHTML = `Jumper ON`
   } else {
+    jumpModeBtn.style.background = ''
     jumpModeBtn.innerHTML = `Jumper OFF`
   }
 }
@@ -68,14 +72,16 @@ const handleJumpMode = () => {
 const handleSpeedMode = () => {
   if (speedPipe <= 0.7) {
     speedPipe = speedPipeOriginal
+    speedModeBtn.style.background = ''
     speedModeBtn.innerHTML = 'Speed OFF'
   } else {
     speedPipe = 0.7
+    speedModeBtn.style.background = 'green'
     speedModeBtn.innerHTML = 'Speed ON'
   }
 }
 
-const startGame = () => {
+const runGame = () => {
   const onAnimationIteration = () => {
     playerCurrentRecord++
     speedPipeOnScreen()
@@ -91,23 +97,6 @@ const startGame = () => {
         pipe.style.animation = `pipe ${speedPipe}s linear infinite`
       }, 200)
     }
-  }
-
-  const speedPipeOnScreen = () => {
-    const multipliersText = [
-      '0.5x',
-      '1.0x',
-      '1.5x',
-      '2.0x',
-      '2.5x',
-      '3.0x',
-      '3.5x'
-    ]
-    const multipliersIndex = Math.floor(playerCurrentRecord / 10)
-    multipliersValue =
-      multipliersText[multipliersIndex] ||
-      multipliersText[multipliersText.length - 1]
-    speedMultiplier.innerHTML = `Velocidade: ${multipliersValue}`
   }
 
   pipe.addEventListener('animationiteration', onAnimationIteration)
@@ -148,6 +137,14 @@ const startGame = () => {
   }, 10)
 }
 
+const speedPipeOnScreen = () => {
+  const multipliersIndex = Math.floor(playerCurrentRecord / 10)
+  multipliersValue =
+    multipliersText[multipliersIndex] ||
+    multipliersText[multipliersText.length - 1]
+  speedMultiplier.innerHTML = `Velocidade: ${multipliersValue}`
+}
+
 const restart = () => {
   if (playerCurrentRecord > playerBestRecord) {
     playerBestRecord = playerCurrentRecord
@@ -171,11 +168,10 @@ const restart = () => {
   loose.style.display = 'none'
 
   speedPipe = speedPipeOriginal
-  speedMultiplier.innerHTML = speedPipe.toFixed(2)
-  startGame()
+  speedMultiplier.innerHTML = `Velocidade: ${multipliersText[0]}`
+  runGame()
 }
 
-let isJumping = false
 const jump = event => {
   if (
     !isJumping &&
@@ -192,6 +188,8 @@ const jump = event => {
     }, 600)
   }
 }
+
+handleModMenu()
 
 container.addEventListener('click', jump)
 container.setAttribute('tabindex', '0')
