@@ -3,6 +3,7 @@
   --clouds-width: 250px;
   --mario-jump: 90px;
   --colision: 0px solid red;
+  --z-index-initial: 1;
 }
 
 * {
@@ -52,7 +53,7 @@ body {
   overflow: hidden;
   border-bottom: 50px solid green;
   background: linear-gradient(skyblue, transparent);
-  z-index: 1;
+  z-index: var(--z-index-initial);
 }
 
 .start button,
@@ -125,12 +126,12 @@ body {
   z-index: 10;
 }
 
-.god_mode {
+.modmenu {
   position: absolute;
   top: 100px;
   right: 50px;
   z-index: 10;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0.5rem;
   background: rgb(0, 128, 0, 0.4);
@@ -138,11 +139,11 @@ body {
   border-radius: 5px;
 }
 
-.god_mode button:active {
-  background: red;
+.modmenu button:active {
+  background: green;
 }
 
-.god_mode button {
+.modmenu button {
   border-radius: 3px;
   padding: 5px;
   border: none;

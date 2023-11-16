@@ -10,6 +10,8 @@ const html_record = document.querySelector('.record')
 const html_bestRecord = document.querySelector('.best_record')
 const colisionBtn = document.querySelector('.colision')
 const jumpModeBtn = document.querySelector('.jumpmode')
+const speedModeBtn = document.querySelector('.speedmode')
+const modMenuBtn = document.querySelector('.modmenu')
 
 const enemies = [
   'pipe',
@@ -32,28 +34,58 @@ let playerLastRecord = 0
 let playerCurrentRecord = 0
 let playerBestRecord = 0
 
+let modMenu = true
 let colisionMode = false
 let jumpMode = false
 
+const handleModMenu = () => {
+  if (modMenu) {
+    modMenuBtn.style.display = 'flex'
+  } else {
+    modMenuBtn.style.display = 'none'
+  }
+}
+handleModMenu()
+
 const handleColisionMode = () => {
   colisionMode = !colisionMode
-  colisionBtn.innerHTML = `Colision ${!colisionMode}`
+  if (!colisionMode) {
+    colisionBtn.innerHTML = `Colision ON`
+  } else {
+    colisionBtn.innerHTML = `Colision OFF`
+  }
 }
+
 const handleJumpMode = () => {
   jumpMode = !jumpMode
-  jumpModeBtn.innerHTML = `Jumper ${jumpMode}`
+  if (jumpMode) {
+    jumpModeBtn.innerHTML = `Jumper ON`
+  } else {
+    jumpModeBtn.innerHTML = `Jumper OFF`
+  }
+}
+
+const handleSpeedMode = () => {
+  if (speedPipe <= 0.7) {
+    speedPipe = speedPipeOriginal
+    speedModeBtn.innerHTML = 'Speed OFF'
+  } else {
+    speedPipe = 0.7
+    speedModeBtn.innerHTML = 'Speed ON'
+  }
 }
 
 const startGame = () => {
   const onAnimationIteration = () => {
     playerCurrentRecord++
+    speedPipeOnScreen()
+
     html_record.innerHTML = `Atual: ${playerCurrentRecord}`
     let enemie = Math.floor(Math.random() * enemies.length)
     pipe.src = `./assets/enemies/${enemies[enemie]}.png`
 
     if (speedPipe >= 0.65) {
       speedPipe -= 0.01
-      speedPipeOnScreen()
       pipe.style.animation = 'none'
       setTimeout(() => {
         pipe.style.animation = `pipe ${speedPipe}s linear infinite`
@@ -162,4 +194,5 @@ const jump = event => {
 }
 
 container.addEventListener('click', jump)
+container.setAttribute('tabindex', '0')
 container.addEventListener('keydown', jump)
