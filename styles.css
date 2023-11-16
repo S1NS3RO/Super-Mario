@@ -101,7 +101,7 @@ body {
 .dashboard {
   display: flex;
   justify-content: space-between;
-  position: fixed;
+  position: absolute;
   margin: 5px;
   left: 0;
   right: 0;
