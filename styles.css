@@ -4,6 +4,7 @@
   --mario-jump: 90px;
   --colision: 0px solid red;
   --z-index-initial: 1;
+  --z-index-max: 100;
 }
 
 * {
@@ -56,7 +57,7 @@ body {
   height: 100%;
   overflow: hidden;
   background: linear-gradient(rgba(0, 128, 0, 0.482), rgba(0, 0, 255, 0.419));
-  z-index: 100;
+  z-index: var(--z-index-max);
 }
 
 .loose {
@@ -68,7 +69,7 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(231, 125, 189, 0.3);
-  z-index: 9;
+  z-index: var(--z-index-max);
   position: absolute;
   top: 0;
   left: 0;
@@ -104,7 +105,7 @@ body {
 }
 
 .jump {
-  animation: jump 0.6s ease-out infinite;
+  animation: jump 600ms ease-out infinite;
 }
 
 .pipe {
@@ -127,10 +128,12 @@ body {
 .modmenu {
   position: absolute;
   top: 100px;
-  right: 50px;
+  right: 50%;
+  transform: translate(50%);
   z-index: 10;
   display: none;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   background: rgb(0, 128, 0, 0.4);
   padding: 0.5rem;
@@ -141,7 +144,7 @@ body {
   border-radius: 3px;
   padding: 5px;
   border: none;
-  width: 100px;
+  width: 200px;
 }
 
 @keyframes pipe {

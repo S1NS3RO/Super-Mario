@@ -9,35 +9,34 @@ const html_lastRecord = document.querySelector('.last_record')
 const html_record = document.querySelector('.record')
 const html_bestRecord = document.querySelector('.best_record')
 const colisionBtn = document.querySelector('.colision')
-const jumpModeBtn = document.querySelector('.jumpmode')
+const autoJumpBtn = document.querySelector('.autoJump')
 const speedModeBtn = document.querySelector('.speedmode')
 const modMenuBtn = document.querySelector('.modmenu')
+const speedmenu = document.querySelector('.speedmenu')
+const speedmenu2 = document.querySelector('.speedmenu2')
 
 const enemies = [
-  'pipe',
-  'pipe',
-  'pipe',
-  'pipe',
-  'bala',
-  'balaboca',
-  'fantasma',
-  'gumb',
-  'king',
-  'peixe',
-  'pixel',
-  'planta'
+  'bala.png',
+  'fantasma.png',
+  'gumb.gif',
+  'king.png',
+  'peixe.png',
+  'pipe.png',
+  'planta.png'
 ]
-const multipliersText = ['0.5x', '1.0x', '1.5x', '2.0x', '2.5x', '3.0x', '3.5x']
+const multipliersText = ['0.5x', '1.0x', '1.5x', '2.0x', '2.5x', '3.0x', 'MAX']
 const speedPipeOriginal = 1.3
+const maxSpeedPipe = 0.65
 
 let speedPipe = speedPipeOriginal
 let playerLastRecord = 0
 let playerCurrentRecord = 0
 let playerBestRecord = 0
 let isJumping = false
-let colisionMode = false
-let jumpMode = false
-let modMenu = true // Ativa o mod menu
+let ignoreColision = false
+let autoJump = false
+let autoSpeed = false
+let modMenu = false // Ativa o mod menu
 
 const handleModMenu = () => {
   if (modMenu) {
@@ -47,9 +46,9 @@ const handleModMenu = () => {
   }
 }
 
-const handleColisionMode = () => {
-  colisionMode = !colisionMode
-  if (!colisionMode) {
+const handleIgnoreColision = () => {
+  ignoreColision = !ignoreColision
+  if (!ignoreColision) {
     colisionBtn.style.background = ''
     colisionBtn.innerHTML = `Colision ON`
   } else {
@@ -58,51 +57,56 @@ const handleColisionMode = () => {
   }
 }
 
-const handleJumpMode = () => {
-  jumpMode = !jumpMode
-  if (jumpMode) {
-    jumpModeBtn.style.background = 'green'
-    jumpModeBtn.innerHTML = `Jumper ON`
+const handleAutoJump = () => {
+  autoJump = !autoJump
+  if (autoJump) {
+    autoJumpBtn.style.background = 'green'
+    autoJumpBtn.innerHTML = `Jumper ON`
   } else {
-    jumpModeBtn.style.background = ''
-    jumpModeBtn.innerHTML = `Jumper OFF`
+    autoJumpBtn.style.background = ''
+    autoJumpBtn.innerHTML = `Jumper OFF`
   }
 }
 
 const handleSpeedMode = () => {
-  if (speedPipe <= 0.7) {
-    speedPipe = speedPipeOriginal
-    speedModeBtn.style.background = ''
-    speedModeBtn.innerHTML = 'Speed OFF'
-  } else {
-    speedPipe = 0.7
+  autoSpeed = !autoSpeed
+  if (autoSpeed) {
+    pipe.style.animation = `pipe ${maxSpeedPipe}s linear infinite`
     speedModeBtn.style.background = 'green'
     speedModeBtn.innerHTML = 'Speed ON'
+    speedMultiplier.innerHTML = `Velocidade: MAX`
+  } else {
+    pipe.style.animation = `pipe ${speedPipe}s linear infinite`
+    speedModeBtn.style.background = ''
+    speedModeBtn.innerHTML = 'Speed OFF'
   }
 }
 
 const runGame = () => {
+  start.style.display = 'none'
+  pipe.style.animation = `pipe ${speedPipe}s linear infinite`
+
   const onAnimationIteration = () => {
-    playerCurrentRecord++
-    speedPipeOnScreen()
+    if (!autoSpeed) {
+      playerCurrentRecord += 1
+      html_record.innerHTML = `Atual: ${playerCurrentRecord}`
 
-    html_record.innerHTML = `Atual: ${playerCurrentRecord}`
-    let enemie = Math.floor(Math.random() * enemies.length)
-    pipe.src = `./assets/enemies/${enemies[enemie]}.png`
+      let enemie = Math.floor(Math.random() * enemies.length)
 
-    if (speedPipe >= 0.65) {
-      speedPipe -= 0.01
-      pipe.style.animation = 'none'
-      setTimeout(() => {
-        pipe.style.animation = `pipe ${speedPipe}s linear infinite`
-      }, 200)
+      pipe.src = `./assets/enemies/${enemies[enemie]}`
+
+      if (speedPipe > maxSpeedPipe) {
+        speedPipe -= 0.01
+        pipe.style.animation = 'none'
+        setTimeout(() => {
+          pipe.style.animation = `pipe ${speedPipe}s linear infinite`
+        }, 200)
+      }
+      speedPipeOnScreen()
     }
   }
 
   pipe.addEventListener('animationiteration', onAnimationIteration)
-
-  start.style.display = 'none'
-  pipe.style.animation = `pipe ${speedPipe}s linear infinite`
 
   const loop = setInterval(() => {
     const pipeHeight = pipe.offsetHeight
@@ -111,11 +115,11 @@ const runGame = () => {
     console.log(pipeHeight)
 
     // Game Over
-    if (jumpMode && pipePosition <= 145) {
+    if (autoJump && pipePosition <= 145) {
       // Pula automaticamente
       jump({ type: 'automatic' })
     } else if (
-      !colisionMode &&
+      !ignoreColision &&
       pipePosition <= 70 &&
       pipePosition > 0 &&
       marioJumpHeight <= pipeHeight - 3
@@ -138,7 +142,9 @@ const runGame = () => {
 }
 
 const speedPipeOnScreen = () => {
+  speedmenu.innerHTML = speedPipe.toFixed(2)
   const multipliersIndex = Math.floor(playerCurrentRecord / 10)
+  speedmenu2.innerHTML = `${multipliersIndex}`
   multipliersValue =
     multipliersText[multipliersIndex] ||
     multipliersText[multipliersText.length - 1]
