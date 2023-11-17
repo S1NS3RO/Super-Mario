@@ -3,7 +3,6 @@
   --clouds-width: 250px;
   --mario-jump: 90px;
   --colision: 0px solid red;
-  --z-index-initial: 1;
   --z-index-max: 100;
 }
 
@@ -26,7 +25,6 @@ body {
   position: relative;
   overflow: hidden;
   background: linear-gradient(skyblue, transparent);
-  /* z-index: var(--z-index-initial);*/
 }
 
 .dashboard {

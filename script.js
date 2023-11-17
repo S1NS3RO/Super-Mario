@@ -204,6 +204,11 @@ const jump = event => {
   }
 }
 
+window.onload = function () {
+  window.scrollTo(0, document.body.scrollHeight)
+  alert('oi')
+}
+
 container.addEventListener('click', jump)
 container.setAttribute('tabindex', '0')
 container.addEventListener('keydown', jump)
