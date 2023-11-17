@@ -16,7 +16,7 @@
   <body>
     <div class="modmenu">
       <span class="speedmenu2">multipliersIndex</span>
-      <span class="speedmenu">1.30</span>
+      <span class="speedmenu">pipeSpeed</span>
       <button
         class="colision"
         onClick="handleIgnoreColision()">
@@ -35,9 +35,16 @@
         Speed OFF
       </button>
     </div>
-    <div class="speed_multiplier">Velocidade: 0.5x</div>
     <div class="start">
       <button onClick="runGame()">Start</button>
+      <label>
+        <span>
+          <input
+            type="checkbox"
+            class="handleModMenu"
+            onChange="handleModMenu()" /></span
+        >Dev mode</label
+      >
     </div>
     <div class="loose">
       <img src="./assets/game-over.png" />
@@ -55,9 +62,9 @@
         class="pipe" />
     </div>
     <div class="dashboard">
-      <div class="last_record">Anterior: 0</div>
-      <div class="record">Atual: 0</div>
       <div class="best_record">Melhor: 0</div>
+      <div class="record">Atual: 0</div>
+      <div class="speed_multiplier">Vel.: 0.5x</div>
     </div>
     <script src="./script.js"></script>
   </body>

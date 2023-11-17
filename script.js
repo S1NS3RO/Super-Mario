@@ -5,13 +5,14 @@ const clouds = document.querySelector('.clouds')
 const loose = document.querySelector('.loose')
 const start = document.querySelector('.start')
 const speedMultiplier = document.querySelector('.speed_multiplier')
-const html_lastRecord = document.querySelector('.last_record')
 const html_record = document.querySelector('.record')
 const html_bestRecord = document.querySelector('.best_record')
+const dashboard = document.querySelector('.dashboard')
 const colisionBtn = document.querySelector('.colision')
 const autoJumpBtn = document.querySelector('.autoJump')
 const speedModeBtn = document.querySelector('.speedmode')
 const modMenuBtn = document.querySelector('.modmenu')
+const checkboxMod = document.querySelector('.handleModMenu')
 const speedmenu = document.querySelector('.speedmenu')
 const speedmenu2 = document.querySelector('.speedmenu2')
 
@@ -27,18 +28,23 @@ const enemies = [
 const multipliersText = ['0.5x', '1.0x', '1.5x', '2.0x', '2.5x', '3.0x', 'MAX']
 const speedPipeOriginal = 1.3
 const maxSpeedPipe = 0.65
+const isFakeRecord = '#eb1717'
 
 let speedPipe = speedPipeOriginal
-let playerLastRecord = 0
 let playerCurrentRecord = 0
 let playerBestRecord = 0
 let isJumping = false
 let ignoreColision = false
 let autoJump = false
 let autoSpeed = false
-let modMenu = false // Ativa o mod menu
+let modMenu = true // Ativa o mod menu
 
 const handleModMenu = () => {
+  if (checkboxMod.checked) {
+    modMenu = true
+  } else {
+    modMenu = false
+  }
   if (modMenu) {
     modMenuBtn.style.display = 'flex'
   } else {
@@ -52,6 +58,7 @@ const handleIgnoreColision = () => {
     colisionBtn.style.background = ''
     colisionBtn.innerHTML = `Colision ON`
   } else {
+    dashboard.style.color = isFakeRecord
     colisionBtn.style.background = 'green'
     colisionBtn.innerHTML = `Colision OFF`
   }
@@ -60,6 +67,7 @@ const handleIgnoreColision = () => {
 const handleAutoJump = () => {
   autoJump = !autoJump
   if (autoJump) {
+    dashboard.style.color = isFakeRecord
     autoJumpBtn.style.background = 'green'
     autoJumpBtn.innerHTML = `Jumper ON`
   } else {
@@ -74,7 +82,7 @@ const handleSpeedMode = () => {
     pipe.style.animation = `pipe ${maxSpeedPipe}s linear infinite`
     speedModeBtn.style.background = 'green'
     speedModeBtn.innerHTML = 'Speed ON'
-    speedMultiplier.innerHTML = `Velocidade: MAX`
+    speedMultiplier.innerHTML = `Vel.: MAX`
   } else {
     pipe.style.animation = `pipe ${speedPipe}s linear infinite`
     speedModeBtn.style.background = ''
@@ -95,6 +103,7 @@ const runGame = () => {
 
       pipe.src = `./assets/enemies/${enemies[enemie]}`
 
+      speedPipeOnScreen()
       if (speedPipe > maxSpeedPipe) {
         speedPipe -= 0.01
         pipe.style.animation = 'none'
@@ -102,7 +111,6 @@ const runGame = () => {
           pipe.style.animation = `pipe ${speedPipe}s linear infinite`
         }, 200)
       }
-      speedPipeOnScreen()
     }
   }
 
@@ -148,7 +156,7 @@ const speedPipeOnScreen = () => {
   multipliersValue =
     multipliersText[multipliersIndex] ||
     multipliersText[multipliersText.length - 1]
-  speedMultiplier.innerHTML = `Velocidade: ${multipliersValue}`
+  speedMultiplier.innerHTML = `Vel.: ${multipliersValue}`
 }
 
 const restart = () => {
@@ -157,14 +165,17 @@ const restart = () => {
     html_bestRecord.innerHTML = `Melhor: ${playerBestRecord}`
   }
 
-  playerLastRecord = playerCurrentRecord
-  html_lastRecord.innerHTML = `Anterior: ${playerLastRecord}`
+  if (autoSpeed) {
+    handleSpeedMode()
+  }
 
   playerCurrentRecord = 0
   html_record.innerHTML = `Atual: ${playerCurrentRecord}`
 
-  pipe.style.animation = `pipe ${speedPipeOriginal} linear infinite`
+  speedPipe = speedPipeOriginal
+  pipe.style.animation = `pipe ${speedPipe} linear infinite`
   pipe.style.left = `auto`
+  speedMultiplier.innerHTML = `Vel.: ${multipliersText[0]}`
 
   mario.style.bottom = `0px`
   mario.src = './assets/mario.gif'
@@ -173,8 +184,6 @@ const restart = () => {
 
   loose.style.display = 'none'
 
-  speedPipe = speedPipeOriginal
-  speedMultiplier.innerHTML = `Velocidade: ${multipliersText[0]}`
   runGame()
 }
 
@@ -194,8 +203,6 @@ const jump = event => {
     }, 600)
   }
 }
-
-handleModMenu()
 
 container.addEventListener('click', jump)
 container.setAttribute('tabindex', '0')
