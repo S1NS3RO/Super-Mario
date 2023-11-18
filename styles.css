@@ -6,6 +6,7 @@
   --z-index-max: 100;
   --start-menu-color: rgba(153, 153, 153, 0.823);
   --global-max-width: 500px;
+  --global-max-height: 1000px;
 }
 
 * {
@@ -17,6 +18,8 @@
 
 body {
   margin: 0 auto;
+  max-width: var(--global-max-width);
+  max-height: var(--global-max-height);
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -242,8 +245,3 @@ body {
     top: 20%;
   }
 }
-
-@media (min-width: 500px) {
-  body {
-  max-width: var(--global-max-width);
-}}
