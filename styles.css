@@ -16,7 +16,6 @@
 }
 
 body {
-  max-width: var(--global-max-width);
   margin: 0 auto;
   width: 100vw;
   height: 100vh;
@@ -243,3 +242,8 @@ body {
     top: 20%;
   }
 }
+
+@media (min-width: 500px) {
+  body {
+  max-width: var(--global-max-width);
+}}
