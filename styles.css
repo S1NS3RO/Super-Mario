@@ -5,8 +5,6 @@
   --colision: 0px solid red;
   --z-index-max: 100;
   --start-menu-color: rgba(153, 153, 153, 0.823);
-  --global-max-width: 500px;
-  --global-max-height: 1000px;
 }
 
 * {
@@ -18,8 +16,7 @@
 
 body {
   margin: 0 auto;
-  max-width: var(--global-max-width);
-  max-height: var(--global-max-height);
+  max-width: 900px;
   width: 100vw;
   height: 100vh;
   display: flex;
