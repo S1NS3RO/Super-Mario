@@ -93,14 +93,12 @@ const handleSpeedMode = () => {
 const runGame = () => {
   start.style.display = 'none'
   pipe.style.animation = `pipe ${speedPipe}s linear infinite`
-
   const onAnimationIteration = () => {
     if (!autoSpeed) {
       playerCurrentRecord += 1
       html_record.innerHTML = `Atual: ${playerCurrentRecord}`
 
       let enemie = Math.floor(Math.random() * enemies.length)
-
       pipe.src = `./assets/enemies/${enemies[enemie]}`
 
       speedPipeOnScreen()
@@ -139,9 +137,7 @@ const runGame = () => {
       mario.src = './assets/mario-dead.png'
       mario.style.width = '40px'
       mario.style.marginLeft = '30px'
-
       loose.style.display = 'flex'
-
       pipe.removeEventListener('animationiteration', onAnimationIteration)
 
       clearInterval(loop)
@@ -151,6 +147,7 @@ const runGame = () => {
 
 const speedPipeOnScreen = () => {
   speedmenu.innerHTML = speedPipe.toFixed(2)
+
   const multipliersIndex = Math.floor(playerCurrentRecord / 10)
   speedmenu2.innerHTML = `${multipliersIndex}`
   multipliersValue =
@@ -171,17 +168,14 @@ const restart = () => {
 
   playerCurrentRecord = 0
   html_record.innerHTML = `Atual: ${playerCurrentRecord}`
-
   speedPipe = speedPipeOriginal
   pipe.style.animation = `pipe ${speedPipe} linear infinite`
   pipe.style.left = `auto`
   speedMultiplier.innerHTML = `Vel.: ${multipliersText[0]}`
-
   mario.style.bottom = `0px`
   mario.src = './assets/mario.gif'
   mario.style.marginLeft = '0'
   mario.style.width = '80px'
-
   loose.style.display = 'none'
 
   runGame()
@@ -202,11 +196,6 @@ const jump = event => {
       isJumping = false
     }, 600)
   }
-}
-
-window.onload = function () {
-  window.scrollTo(0, document.body.scrollHeight)
-  alert('oi')
 }
 
 container.addEventListener('click', jump)
