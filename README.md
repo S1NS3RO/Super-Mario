@@ -1,9 +1,9 @@
-Este projeto foi inspirado em outro já existente, porém escrevi o código totalmente do zero, eu acredito que ficar copiando códigos não vai me ajudar a evoluir.
+Este projeto foi inspirado em outro já existente. No entanto, escrevi o código completamente do zero, pois acredito que copiar códigos não contribui para a minha evolução.
 
-O objetivo foi entender um pouco mais sobre as mecânicas de JavaScript, ux e front-end.
+O objetivo foi aprofundar meu entendimento nas mecânicas de JavaScript, UX e front-end.
 
-Durante o processo aprendi mais sobre a utilização de variáveis de controle, lógica e cálculos, apesar de ser uma aplicação simples, precisei de 200 linhas para fazer-lo rodar da forma que eu idealizei.
+Ao longo do processo, aprendi a implementar variáveis de controle, lógica e cálculos, mesmo em uma aplicação relativamente simples.
 
-Foi uma boa experiência prática.
+Adquiri uma valiosa experiência prática e conceitual.
 
-Obs: Todo o código foi desenvolvido pelo celular.
+Obs: Desenvolvi todo o código pelo celular, talvez jogar em um dispositivo móvel proporcione uma imersão melhor.
