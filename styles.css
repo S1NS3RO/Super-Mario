@@ -4,6 +4,8 @@
   --mario-jump: 90px;
   --colision: 0px solid red;
   --z-index-max: 100;
+  --start-menu-color: rgba(153, 153, 153, 0.823);
+  --global-max-width: 500px;
 }
 
 * {
@@ -14,28 +16,13 @@
 }
 
 body {
+  max-width: var(--global-max-width);
+  margin: 0 auto;
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.creator a {
-  padding: 5px;
-  color: black;
-  text-decoration: none;
-}
-
-.creator {
-  position: absolute;
-  top: 20px;
-  right: 50%;
-  transform: translate(50%);
-  z-index: calc(var(--z-index-max) + 1);
-  font-size: 20px;
-  display: flex;
-  gap: 20px;
 }
 
 .container {
@@ -81,20 +68,35 @@ body {
   z-index: var(--z-index-max);
 }
 
-.start label {
+.creator {
   display: flex;
-  position: absolute;
-  top: 55px;
-  background: gray;
+  gap: 10px;
+  flex-direction: column;
+  font-size: 20px;
+  width: 250px;
+  justify-content: center;
   align-items: center;
-  gap: 3px;
-  padding: 3px;
+}
+
+.a_sep {
+  display: flex;
+  gap: 10px;
+}
+
+.a_sep a,
+.creator label {
+  display: flex;
+  background: var(--start-menu-color);
+  gap: 8px;
+  padding: 10px;
   border-radius: 3px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
   color: white;
+  align-items: center;
+  justify-content: center;
 }
 
-.start span {
+.creator span {
   display: flex;
   align-items: center;
   width: max-content;
@@ -116,16 +118,40 @@ body {
   left: 0;
 }
 
+.loose .wrapper,
+.start .wrapper {
+  position: relative;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
 .start button,
 .loose button {
-  padding: 10px 15px;
-  font-size: 1.3rem;
-  color: white;
+  padding: 10px 0;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   background: green;
   border: none;
   border-radius: 4px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s;
+  max-width: 90%;
+}
+
+.start button:active,
+.loose button:active {
+  transform: scale(1.03);
+}
+
+.game-over,
+.start img,
+.loose img {
+  max-width: 90%;
+  position: relative;
+  top: 2px;
 }
 
 .clouds {
