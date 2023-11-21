@@ -1,102 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <meta
-      http-equiv="X-UA-Compatible"
-      content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Super Mario</title>
     <meta
       name="description"
-      content="Desenvolvi esse Mini-Game com o objetivo de aprender mais sobre JavaScript e conceitos front-end." />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-    <link
-      rel="stylesheet"
-      href="./styles.css" />
+      content="Desenvolvi esse Mini-Game com o objetivo de aprender mais sobre JavaScript e conceitos front-end."
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="modmenu">
       <span class="speedmenu2">multipliersIndex</span>
       <span class="speedmenu">pipeSpeed</span>
-      <button
-        class="colision"
-        onClick="handleIgnoreColision()">
-        Colision ON
-      </button>
+      <button class="colision" onClick="handleIgnoreColision()">Colision ON</button>
 
-      <button
-        class="autoJump"
-        onClick="handleAutoJump()">
-        Jumper OFF
-      </button>
+      <button class="autoJump" onClick="handleAutoJump()">Jumper OFF</button>
 
-      <button
-        class="speedmode"
-        onClick="handleSpeedMode()">
-        Speed OFF
-      </button>
+      <button class="speedmode" onClick="handleSpeedMode()">Speed OFF</button>
     </div>
     <div class="start">
       <div class="wrapper">
-      <div class="creator">
+        <div class="creator">
+          <div>
+            <label>
+              <span> <input type="checkbox" class="handleModMenu" onChange="handleModMenu()" /></span>Dev mode</label
+            >
+          </div>
+        </div>
+        <button onClick="runGame()">
+          <img class="start_img" src="./assets/start.png" alt="" />
+        </button>
         <div class="a_sep">
-          <a
-            href="https://github.com/S1NS3RO/Super-Mario"
-            target="_blank">
+          <a href="https://github.com/S1NS3RO/Super-Mario" target="_blank">
             <i class="bi bi-github"></i>
           </a>
-          <a
-            href="https://br.linkedin.com/in/douglas-vargas-a517b2288"
-            target="_blank">
+          <a href="https://br.linkedin.com/in/douglas-vargas-a517b2288" target="_blank">
             <i class="bi bi-linkedin"></i>
           </a>
         </div>
-        <div>
-          <label>
-            <span>
-              <input
-                type="checkbox"
-                class="handleModMenu"
-                onChange="handleModMenu()" /></span
-            >Dev mode</label
-          >
-        </div>
       </div>
-      <button onClick="runGame()">
-        <img
-          class="start_img"
-          src="./assets/start.png"
-          alt="" />
-      </button>
-    </div></div>
+    </div>
     <div class="loose">
       <div class="wrapper">
-        <img
-          class="game-over"
-          src="./assets/game_over.png" />
+        <img class="game-over" src="./assets/game_over.png" />
         <button onClick="restart()">
-          <img
-            class="start_img"
-            src="./assets/re-start.png"
-            alt="" />
+          <img class="start_img" src="./assets/re-start.png" alt="" />
         </button>
       </div>
     </div>
     <div class="container">
-      <img
-        src="./assets/clouds.png"
-        class="clouds" />
-      <img
-        src="./assets/mario.gif"
-        class="mario" />
-      <img
-        src="./assets/enemies/pipe.png"
-        class="pipe" />
+      <img src="./assets/clouds.png" class="clouds" />
+      <img src="./assets/mario.gif" class="mario" />
+      <img src="./assets/enemies/pipe.png" class="pipe" />
     </div>
     <div class="dashboard">
       <div class="best_record">Melhor: 0</div>

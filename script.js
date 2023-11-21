@@ -16,15 +16,7 @@ const checkboxMod = document.querySelector('.handleModMenu')
 const speedmenu = document.querySelector('.speedmenu')
 const speedmenu2 = document.querySelector('.speedmenu2')
 
-const enemies = [
-  'bala.png',
-  'fantasma.png',
-  'gumb.gif',
-  'king.png',
-  'peixe.png',
-  'pipe.png',
-  'planta.png'
-]
+const enemies = ['bala.png', 'fantasma.png', 'gumb.gif', 'king.png', 'peixe.png', 'pipe.png', 'planta.png']
 const multipliersText = ['0.5x', '1.0x', '1.5x', '2.0x', '2.5x', '3.0x', 'MAX']
 const speedPipeOriginal = 1.3
 const maxSpeedPipe = 0.65
@@ -92,6 +84,7 @@ const handleSpeedMode = () => {
 
 const runGame = () => {
   start.style.display = 'none'
+  container.focus()
   pipe.style.animation = `pipe ${speedPipe}s linear infinite`
   const onAnimationIteration = () => {
     if (!autoSpeed) {
@@ -118,18 +111,14 @@ const runGame = () => {
     const pipeHeight = pipe.offsetHeight
     let pipePosition = pipe.offsetLeft
     let marioJumpHeight = +getComputedStyle(mario).bottom.replace('px', '')
-    console.log(pipeHeight)
+
+    // Pula automaticamente
+    if (autoJump && pipePosition <= 145) {
+      jump({ type: 'automatic' })
+    }
 
     // Game Over
-    if (autoJump && pipePosition <= 145) {
-      // Pula automaticamente
-      jump({ type: 'automatic' })
-    } else if (
-      !ignoreColision &&
-      pipePosition <= 70 &&
-      pipePosition > 0 &&
-      marioJumpHeight <= pipeHeight - 3
-    ) {
+    if (!ignoreColision && pipePosition <= 70 && pipePosition > 0 && marioJumpHeight <= pipeHeight - 3) {
       pipe.style.animation = 'none'
       mario.classList.remove('jump')
       pipe.style.left = `${pipePosition}px`
@@ -150,9 +139,7 @@ const speedPipeOnScreen = () => {
 
   const multipliersIndex = Math.floor(playerCurrentRecord / 10)
   speedmenu2.innerHTML = `${multipliersIndex}`
-  multipliersValue =
-    multipliersText[multipliersIndex] ||
-    multipliersText[multipliersText.length - 1]
+  multipliersValue = multipliersText[multipliersIndex] || multipliersText[multipliersText.length - 1]
   speedMultiplier.innerHTML = `Vel.: ${multipliersValue}`
 }
 
@@ -181,13 +168,10 @@ const restart = () => {
   runGame()
 }
 
-const jump = event => {
+const jump = (event) => {
   if (
     !isJumping &&
-    (event.type === 'click' ||
-      event.key === ' ' ||
-      event.key === 'ArrowUp' ||
-      event.type === 'automatic')
+    (event.type === 'click' || event.key === ' ' || event.key === 'ArrowUp' || event.type === 'automatic')
   ) {
     isJumping = true
     mario.classList.add('jump')
